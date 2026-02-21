@@ -74,6 +74,12 @@ app.mount("/", StaticFiles(directory=frontend_build_path, html=True), name="fron
 # Include the router in the main app
 app.include_router(api_router)
 
+from fastapi.staticfiles import StaticFiles
+
+# Serve React build
+frontend_path = ROOT_DIR / "frontend_build"
+app.mount("/", StaticFiles(directory=frontend_path, html=True), name="frontend")
+
 app.add_middleware(
     CORSMiddleware,
     allow_credentials=True,
