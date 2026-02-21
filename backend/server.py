@@ -66,19 +66,11 @@ async def get_status_checks():
     
     return status_checks
 
-from fastapi.staticfiles import StaticFiles
 
-frontend_build_path = ROOT_DIR.parent / "frontend" / "build"
-app.mount("/", StaticFiles(directory=frontend_build_path, html=True), name="frontend")
 
 # Include the router in the main app
 app.include_router(api_router)
 
-from fastapi.staticfiles import StaticFiles
-
-# Serve React build
-frontend_path = ROOT_DIR / "frontend_build"
-app.mount("/", StaticFiles(directory=frontend_path, html=True), name="frontend")
 
 app.add_middleware(
     CORSMiddleware,
@@ -99,8 +91,10 @@ logger = logging.getLogger(__name__)
 async def shutdown_db_client():
     client.close()
 
-
 from fastapi.staticfiles import StaticFiles
 
-# Serve React build
-app.mount("/", StaticFiles(directory=ROOT_DIR.parent / "frontend" / "build", html=True), name="frontend")
+app.mount(
+    "/",
+    StaticFiles(directory="frontend_build", html=True),
+    name="frontend"
+)
