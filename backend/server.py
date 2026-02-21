@@ -66,6 +66,11 @@ async def get_status_checks():
     
     return status_checks
 
+from fastapi.staticfiles import StaticFiles
+
+frontend_build_path = ROOT_DIR.parent / "frontend" / "build"
+app.mount("/", StaticFiles(directory=frontend_build_path, html=True), name="frontend")
+
 # Include the router in the main app
 app.include_router(api_router)
 
