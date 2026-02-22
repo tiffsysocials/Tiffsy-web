@@ -93,8 +93,15 @@ async def shutdown_db_client():
 
 from fastapi.staticfiles import StaticFiles
 
-app.mount(
-    "/",
-    StaticFiles(directory="frontend_build", html=True),
-    name="frontend"
-)
+# Serve frontend build - use path relative to this file's directory
+frontend_build_dir = ROOT_DIR / "frontend_build"
+if not frontend_build_dir.exists():
+    # Fallback: check repo root level
+    frontend_build_dir = ROOT_DIR.parent / "frontend" / "build"
+
+if frontend_build_dir.exists():
+    app.mount(
+        "/",
+        StaticFiles(directory=str(frontend_build_dir), html=True),
+        name="frontend"
+    )
