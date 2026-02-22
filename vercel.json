@@ -1,9 +1,8 @@
 {
-  "buildCommand": "npm install --legacy-peer-deps && npm run build",
-  "outputDirectory": "build",
-  "installCommand": "npm install --legacy-peer-deps",
-  "framework": "create-react-app",
-  "rootDirectory": "frontend",
+  "buildCommand": "cd frontend && npm install --legacy-peer-deps && npm run build",
+  "outputDirectory": "frontend/build",
+  "installCommand": "echo skipped",
+  "framework": null,
   "routes": [
     {
       "src": "/static/(.*)",
